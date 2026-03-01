@@ -109,6 +109,7 @@ Trayecto + Grupo de Clase
 
 y calcula el precio medio.
 
+<br><br><br>
 
 3️⃣ Scraping principal
 scrape_vuelos()
@@ -133,6 +134,7 @@ Exporta a Excel
 
 Calcula medias
 
+<br><br><br>
 
 4️⃣ Unión de ficheros
 unir_excels()
@@ -154,7 +156,7 @@ Precio medio por Trayecto y Clase
 Si la hoja existe, la reemplaza.
 
 
-
+<br><br><br>
 
 🛠 Requisitos
 pip install pandas selenium beautifulsoup4 openpyxl
@@ -166,6 +168,8 @@ Mozilla Firefox instalado
 geckodriver configurado correctamente
 
 Ajustar rutas locales en el script
+
+<br><br><br>
 
 📈 Valor analítico
 
@@ -179,4 +183,16 @@ Evaluar diferencias entre mercados
 
 Automatizar la generación de indicadores replicables
 
+<br><br><br>
 
+🚀 Posibles extensiones analíticas
+
+Incorporar almacenamiento en base de datos
+
+Construir series temporales
+
+Añadir visualización (matplotlib / seaborn / Power BI)
+
+Análisis de volatilidad de precios
+
+Modelización predictiva
