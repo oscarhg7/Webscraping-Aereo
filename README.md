@@ -1,9 +1,12 @@
 # Webscraping-Aereo
 ✈️ Scraper de vuelos – Proyecto Aéreo
 
+
 Script en Python para el scraping automatizado de vuelos desde Kayak, con extracción, limpieza y consolidación de datos en archivos Excel.
 
 El objetivo del proyecto es obtener precios de vuelos para distintos trayectos y fechas, depurar los resultados y generar estadísticas agregadas (precios medios por trayecto y clase).
+
+
 
 📌 Funcionalidades principales
 
@@ -27,6 +30,8 @@ El objetivo del proyecto es obtener precios de vuelos para distintos trayectos y
 
 🧠 Estructura del proyecto
 
+
+
 El script principal contiene las siguientes secciones:
 
 1️⃣ Configuración general
@@ -46,6 +51,7 @@ Filtros por aerolínea
 Tipos de búsqueda
 
 Opciones de equipaje
+
 
 2️⃣ Funciones auxiliares
 crear_driver()
@@ -91,6 +97,7 @@ Trayecto + Grupo de Clase
 
 y calcula el precio medio.
 
+
 3️⃣ Scraping principal
 scrape_vuelos()
 
@@ -114,6 +121,7 @@ Exporta a Excel
 
 Calcula medias
 
+
 4️⃣ Unión de ficheros
 unir_excels()
 
@@ -132,6 +140,7 @@ Añade una nueva hoja al Excel con:
 Precio medio por Trayecto y Clase
 
 Si la hoja existe, la reemplaza.
+
 
 📊 Flujo completo de ejecución
 
@@ -161,6 +170,7 @@ Se añade hoja de medias en cada uno.
 
 Se muestra tiempo total de ejecución.
 
+
 🛠 Requisitos
 pip install pandas selenium beautifulsoup4 openpyxl
 
@@ -172,17 +182,6 @@ geckodriver configurado correctamente
 
 Ajustar rutas locales en el script
 
-⚙️ Posibles mejoras futuras
-
-Parametrizar rutas y fechas vía argumentos CLI
-
-Contenerizar con Docker
-
-Programar ejecución automática (cron / Task Scheduler)
-
-Añadir base de datos en lugar de Excel
-
-Dashboard de visualización (Power BI / Streamlit)
 
 📈 Objetivo del proyecto
 
@@ -195,6 +194,7 @@ Comparar clases de vuelo
 Analizar diferencias entre trayectos
 
 Automatizar tareas repetitivas de extracción de datos
+
 
 Es un ejemplo práctico de:
 
