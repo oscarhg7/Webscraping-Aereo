@@ -4,7 +4,19 @@
 
 Script en Python para el scraping automatizado de vuelos desde Kayak, con extracción, limpieza y consolidación de datos en archivos Excel.
 
-El objetivo del proyecto es obtener precios de vuelos para distintos trayectos y fechas, depurar los resultados y generar estadísticas agregadas (precios medios por trayecto y clase).
+🎯 Objetivo del proyecto
+
+Este proyecto permite:
+
+Analizar precios de vuelos por trayecto
+
+Comparar clases (Turista vs Premium/Business)
+
+Evaluar diferencias entre vuelos domésticos e internacionales
+
+Obtener indicadores agregados (precio medio)
+
+Automatizar la generación de datasets estructurados
 
 
 
@@ -142,33 +154,6 @@ Precio medio por Trayecto y Clase
 Si la hoja existe, la reemplaza.
 
 
-📊 Flujo completo de ejecución
-
-Al ejecutar el script:
-
-Se crea una carpeta con la fecha actual.
-
-Se ejecutan 4 scrapes:
-
-Doméstico (15 días)
-
-Internacional (15 días)
-
-Doméstico (1 mes)
-
-Internacional (1 mes)
-
-Se generan los Excel individuales.
-
-Se crean dos archivos consolidados:
-
-union_15_dias.xlsx
-
-union_1_mes.xlsx
-
-Se añade hoja de medias en cada uno.
-
-Se muestra tiempo total de ejecución.
 
 
 🛠 Requisitos
@@ -182,26 +167,16 @@ geckodriver configurado correctamente
 
 Ajustar rutas locales en el script
 
-
-📈 Objetivo del proyecto
+📈 Valor analítico
 
 Este proyecto permite:
 
-Monitorizar evolución de precios
+Construir series comparables entre fechas
 
-Comparar clases de vuelo
+Analizar dispersión por clase
 
-Analizar diferencias entre trayectos
+Evaluar diferencias entre mercados
 
-Automatizar tareas repetitivas de extracción de datos
+Automatizar la generación de indicadores replicables
 
 
-Es un ejemplo práctico de:
-
-Web scraping
-
-Limpieza y transformación de datos
-
-Automatización
-
-Generación de reporting estructurado
