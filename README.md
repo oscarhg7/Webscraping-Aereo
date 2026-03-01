@@ -1,6 +1,6 @@
 # Webscraping-Aereo
 ✈️ Scraper de vuelos – Proyecto Aéreo
-
+<br>
 
 Script en Python para el scraping automatizado de vuelos desde Kayak, con extracción, limpieza y consolidación de datos en archivos Excel.
 
@@ -17,7 +17,7 @@ Evaluar diferencias entre vuelos domésticos e internacionales
 Obtener indicadores agregados (precio medio)
 
 Automatizar la generación de datasets estructurados
-
+<br>
 
 
 📌 Funcionalidades principales
@@ -41,7 +41,7 @@ Automatizar la generación de datasets estructurados
 📝 Sistema de logging en consola y en fichero (scraper.log)
 
 🧠 Estructura del proyecto
-
+<br>
 
 
 El script principal contiene las siguientes secciones:
@@ -64,7 +64,7 @@ Tipos de búsqueda
 
 Opciones de equipaje
 
-
+<br>
 2️⃣ Funciones auxiliares
 crear_driver()
 
