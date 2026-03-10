@@ -228,6 +228,8 @@ def scrape_vuelos(trayectos: list[str], fecha_ida: str, fecha_vuelta: str, ruta_
     df_final.to_excel(ruta, index=False)
     log.info("Excel generado: %s (%d filas)", ruta, len(df_final))
 
+    actualizar_historico(df_final, RUTA_BASE)
+
     # Mostrar medias en consola
     medias = calcular_medias(df_final)
     log.info("Medias por trayecto:\n%s", medias.to_string(index=False))
@@ -320,6 +322,21 @@ def agregar_hoja_medias(path_excel: str, hoja_nombre: str = "Medias") -> None:
 
     log.info("Hoja '%s' añadida a %s", hoja_nombre, path_excel)
 
+def actualizar_historico(df: pd.DataFrame, ruta_base: str) -> None:
+    """Añade los nuevos datos al histórico CSV."""
+
+    ruta_historico = os.path.join(ruta_base, "historico_vuelos.csv")
+
+    df = df.copy()
+    df["fecha_scraping"] = date.today()
+
+    if os.path.exists(ruta_historico):
+        historico = pd.read_csv(ruta_historico)
+        df = pd.concat([historico, df], ignore_index=True)
+
+    df.to_csv(ruta_historico, index=False)
+
+    log.info("Histórico actualizado: %s (%d filas)", ruta_historico, len(df))
 
 # -------------------------
 # EJECUCIÓN
@@ -364,5 +381,6 @@ if __name__ == "__main__":
 
     fin = time.time()
     log.info("Tiempo total: %.1f minutos", (fin - inicio) / 60)
+
 
 
