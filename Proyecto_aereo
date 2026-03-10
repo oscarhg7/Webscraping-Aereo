@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Mar  1 12:34:53 2026
-
-@author: U853765
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Scraper de vuelos Kayak – v2 (corregido y mejorado)
 
 """
@@ -43,9 +36,7 @@ log = logging.getLogger(__name__)
 # -------------------------
 # CONFIGURACIÓN GENERAL
 # -------------------------
-RUTA_BASE = r""
-FIREFOX_BIN = r"C:\Program Files\Mozilla Firefox\firefox.exe"
-GECKODRIVER = r"C:\geckodriver\geckodriver.exe"
+RUTA_BASE = "data"
 
 TRAYECTO_DOMESTICO = ['MAD-BRU', 'BCN-BRU', 'BCN-ZRH', 'BCN-GVA', 'MAD-AMS', 'BCN-AMS', 'MAD-FRA', 'BCN-ROM']
 TRAYECTO_INTERNAC  = ['MAD-BOG', 'MAD-MEX', 'MAD-LIM', 'MAD-MIA', 'BCN-TLV', 'BCN-DXB', 'BCN-DOH']
@@ -85,15 +76,19 @@ MALETAS = {
 # FUNCIONES AUXILIARES
 # -------------------------
 
-def crear_driver() -> webdriver.Firefox:
-    """Crea y devuelve un driver Firefox headless."""
+def crear_driver():
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--window-size=1920,1080")
-    options.binary_location = FIREFOX_BIN
-    service = Service(GECKODRIVER)
-    return webdriver.Firefox(service=service, options=options)
 
+    service = Service()
+
+    driver = webdriver.Firefox(
+        service=service,
+        options=options
+    )
+
+    return driver
 
 def cargar_con_reintentos(driver: webdriver.Firefox, url: str, intentos: int = 3, espera: int = 15) -> bool:
     """Carga una URL con reintentos. Devuelve True si tiene éxito."""
@@ -369,3 +364,4 @@ if __name__ == "__main__":
 
     fin = time.time()
     log.info("Tiempo total: %.1f minutos", (fin - inicio) / 60)
+
