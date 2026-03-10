@@ -41,15 +41,15 @@ RUTA_BASE = "data"
 TRAYECTO_DOMESTICO = ['MAD-BRU', 'BCN-BRU', 'BCN-ZRH', 'BCN-GVA', 'MAD-AMS', 'BCN-AMS', 'MAD-FRA', 'BCN-ROM']
 TRAYECTO_INTERNAC  = ['MAD-BOG', 'MAD-MEX', 'MAD-LIM', 'MAD-MIA', 'BCN-TLV', 'BCN-DXB', 'BCN-DOH']
 
-FECHA_IDA_DOM_15DIAS    = "2026-03-11"
-FECHA_VUELTA_DOM_15DIAS = "2026-03-13"
-FECHA_IDA_DOM_1MES      = "2026-03-18"
-FECHA_VUELTA_DOM_1MES   = "2026-03-20"
+FECHA_IDA_DOM_15DIAS    = "2026-03-25"
+FECHA_VUELTA_DOM_15DIAS = "2026-03-27"
+FECHA_IDA_DOM_1MES      = "2026-04-15"
+FECHA_VUELTA_DOM_1MES   = "2026-04-17"
 
-FECHA_IDA_INTER_15DIAS    = "2026-03-15"
-FECHA_VUELTA_INTER_15DIAS = "2026-03-20"
-FECHA_IDA_INTER_1MES      = "2026-04-05"
-FECHA_VUELTA_INTER_1MES   = "2026-04-10"
+FECHA_IDA_INTER_15DIAS    = "2026-03-29"
+FECHA_VUELTA_INTER_15DIAS = "2026-04-03"
+FECHA_IDA_INTER_1MES      = "2026-04-12"
+FECHA_VUELTA_INTER_1MES   = "2026-04-17"
 
 # Clases consideradas válidas (el resto se filtran)
 CLASES_VALIDAS = {"Economy", "Premium Economy", "Business", "First"}
@@ -90,7 +90,7 @@ def crear_driver():
 
     return driver
 
-def cargar_con_reintentos(driver: webdriver.Firefox, url: str, intentos: int = 3, espera: int = 15) -> bool:
+def cargar_con_reintentos(driver: webdriver.Firefox, url: str, intentos: int = 2, espera: int = 12) -> bool:
     """Carga una URL con reintentos. Devuelve True si tiene éxito."""
     for i in range(intentos):
         try:
@@ -364,4 +364,5 @@ if __name__ == "__main__":
 
     fin = time.time()
     log.info("Tiempo total: %.1f minutos", (fin - inicio) / 60)
+
 
