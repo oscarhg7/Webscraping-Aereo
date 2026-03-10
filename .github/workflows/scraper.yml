@@ -2,7 +2,7 @@ name: Scraper vuelos
 
 on:
   schedule:
-    - cron: '0 5 15 * *'   # Ejecuta el día 15 de cada mes a las 08:00
+    - cron: '0 5 11 * *'   # Ejecuta el día 15 de cada mes a las 08:00
   workflow_dispatch:       # Permite ejecutarlo manualmente desde GitHub
 
 jobs:
@@ -43,3 +43,4 @@ jobs:
       with:
         add: '.'
         message: "Actualización automática datos vuelos"
+
