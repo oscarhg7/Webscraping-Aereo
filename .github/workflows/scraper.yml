@@ -1,12 +1,12 @@
-name: Scraper Vuelos
+name: Scraper Vuelos Debug
 
 on:
-  workflow_dispatch:     # Permite ejecutarlo manualmente
+  workflow_dispatch:  # Permite ejecutarlo manualmente
   schedule:
-    - cron: '0 5 15 * *' # Ejecuta el día 15 de cada mes a las 08:00 CET
+    - cron: '0 5 15 * *'  # Ejecuta el día 15 de cada mes a las 08:00 CET
 
 jobs:
-  run-scraper:
+  run-scraper-debug:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,39 +20,61 @@ jobs:
 
     - name: Instalar dependencias
       run: |
+        echo "📌 Instalando dependencias..."
         pip install --upgrade pip
         pip install -r requirements.txt
+        echo "✅ Dependencias instaladas"
 
     - name: Instalar Firefox
       run: |
+        echo "📌 Instalando Firefox..."
         sudo apt-get update
         sudo apt-get install -y firefox
+        echo "✅ Firefox instalado"
 
-    - name: Instalar geckodriver
+    - name: Instalar Geckodriver
       run: |
+        echo "📌 Descargando Geckodriver..."
         wget https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.36.0-linux64.tar.gz
         tar -xvzf geckodriver-v0.36.0-linux64.tar.gz
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
+        echo "✅ Geckodriver instalado"
 
-    - name: Ejecutar scraper y comprobar datos
+    - name: Ejecutar scraper con debug
       id: scraping
       run: |
+        echo "📌 Iniciando scraper..."
         python Proyecto_aereo.py
-        # Comprobar si se han generado archivos con datos
-        if [ -f "data/union_15_dias.xlsx" ] || [ -f "data/union_1_mes.xlsx" ]; then
-          echo "DATOS_SCRAPEADOS=true" >> $GITHUB_ENV
-          echo "✅ Se han scrapeado datos correctamente"
+        echo "📌 Scraper finalizado"
+        
+        echo "📌 Comprobando si se han generado los archivos..."
+        ls -l data || echo "⚠️ Carpeta data no existe"
+        
+        if [ -f "data/union_15_dias.xlsx" ]; then
+          echo "✅ union_15_dias.xlsx encontrado"
         else
-          echo "DATOS_SCRAPEADOS=false" >> $GITHUB_ENV
-          echo "⚠️ No se han scrapeado datos"
+          echo "⚠️ union_15_dias.xlsx NO encontrado"
         fi
 
-    - name: Subir resultados al repositorio solo si hay datos
+        if [ -f "data/union_1_mes.xlsx" ]; then
+          echo "✅ union_1_mes.xlsx encontrado"
+        else
+          echo "⚠️ union_1_mes.xlsx NO encontrado"
+        fi
+
+        # Variable de entorno para el siguiente paso
+        if [ -f "data/union_15_dias.xlsx" ] || [ -f "data/union_1_mes.xlsx" ]; then
+          echo "DATOS_SCRAPEADOS=true" >> $GITHUB_ENV
+        else
+          echo "DATOS_SCRAPEADOS=false" >> $GITHUB_ENV
+        fi
+
+    - name: Subir resultados solo si hay datos
       if: env.DATOS_SCRAPEADOS == 'true'
       uses: EndBug/add-and-commit@v9
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         add: 'data/*'
-        message: "Actualización automática datos vuelos"
+        message: "Actualización automática datos vuelos - debug"
