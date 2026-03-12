@@ -1,9 +1,9 @@
 name: Scraper vuelos
 
 on:
+  workflow_dispatch:   # Solo ejecución manual para probar ahora
   schedule:
-    - cron: '0 5 11 * *'   # Ejecuta el día 11 de cada mes a las 05:00 UTC
-  workflow_dispatch:       # Permite ejecutarlo manualmente desde GitHub
+    - cron: '0 5 15 * *'   # Ejecuta el día 11 de cada mes a las 05:00 UTC
 
 jobs:
   run-scraper:
@@ -30,7 +30,11 @@ jobs:
 
       - name: Instalar Geckodriver
         run: |
-          sudo apt-get install -y firefox-geckodriver
+          GECKO_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+          wget https://github.com/mozilla/geckodriver/releases/download/v$GECKO_VERSION/geckodriver-v$GECKO_VERSION-linux64.tar.gz
+          tar -xvzf geckodriver-v$GECKO_VERSION-linux64.tar.gz
+          chmod +x geckodriver
+          sudo mv geckodriver /usr/local/bin/
           geckodriver --version
 
       - name: Ejecutar scraper
