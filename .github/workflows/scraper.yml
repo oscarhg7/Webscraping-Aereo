@@ -1,48 +1,46 @@
-name: Scraper vuelos
+name: Scraper Vuelos
 
 on:
-  workflow_dispatch:   # Permite ejecutar manualmente
   schedule:
-    - cron: '0 5 11 * *'   # Ejecuta el día 11 de cada mes a las 05:00 UTC
+    - cron: '0 5 15 * *'   # Ejecuta el día 15 de cada mes a las 05:00 UTC (~06:00 CET)
+  workflow_dispatch:       # Permite ejecutar manualmente desde GitHub
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+    - name: Instalar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
 
-      - name: Instalar dependencias
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Instalar dependencias
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Instalar Firefox
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox
+    - name: Instalar Firefox
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y firefox
 
-      - name: Instalar Geckodriver
-        run: |
-          GECKO_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest \
-                          | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-          wget https://github.com/mozilla/geckodriver/releases/download/v$GECKO_VERSION/geckodriver-v$GECKO_VERSION-linux64.tar.gz
-          tar -xvzf geckodriver-v$GECKO_VERSION-linux64.tar.gz
-          chmod +x geckodriver
-          sudo mv geckodriver /usr/local/bin/
-          geckodriver --version
+    - name: Instalar Geckodriver
+      run: |
+        GECKO_VERSION="v0.36.0"
+        wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/geckodriver-$GECKO_VERSION-linux64.tar.gz
+        tar -xvzf geckodriver-$GECKO_VERSION-linux64.tar.gz
+        chmod +x geckodriver
+        sudo mv geckodriver /usr/local/bin/
 
-      - name: Ejecutar scraper
-        run: python Proyecto_aereo.py
+    - name: Ejecutar scraper
+      run: python Proyecto_aereo.py
 
-      - name: Subir resultados al repositorio
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '.'
-          message: "Actualización automática datos vuelos"
+    - name: Subir resultados al repositorio
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: '.'
+        message: "Actualización automática datos vuelos"
