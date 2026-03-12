@@ -1,47 +1,58 @@
-name: Scraper vuelos
+name: Scraper Vuelos
 
 on:
+  workflow_dispatch:     # Permite ejecutarlo manualmente
   schedule:
-    - cron: '0 5 15 * *'   # Ejecuta el día 15 de cada mes a las 08:00 CET
-  workflow_dispatch:       # Permite ejecutarlo manualmente desde GitHub
+    - cron: '0 5 15 * *' # Ejecuta el día 15 de cada mes a las 08:00 CET
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+    - name: Instalar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
 
-      - name: Instalar dependencias
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Instalar dependencias
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Instalar Firefox
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox
+    - name: Instalar Firefox
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y firefox
 
-      - name: Instalar geckodriver
-        run: |
-          wget https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.36.0-linux64.tar.gz
-          tar -xvzf geckodriver-v0.36.0-linux64.tar.gz
-          chmod +x geckodriver
-          sudo mv geckodriver /usr/local/bin/
+    - name: Instalar geckodriver
+      run: |
+        wget https://github.com/mozilla/geckodriver/releases/latest/download/geckodriver-v0.36.0-linux64.tar.gz
+        tar -xvzf geckodriver-v0.36.0-linux64.tar.gz
+        chmod +x geckodriver
+        sudo mv geckodriver /usr/local/bin/
 
-      - name: Ejecutar scraper
-        run: python Proyecto_aereo.py
+    - name: Ejecutar scraper y comprobar datos
+      id: scraping
+      run: |
+        python Proyecto_aereo.py
+        # Comprobar si se han generado archivos con datos
+        if [ -f "data/union_15_dias.xlsx" ] || [ -f "data/union_1_mes.xlsx" ]; then
+          echo "DATOS_SCRAPEADOS=true" >> $GITHUB_ENV
+          echo "✅ Se han scrapeado datos correctamente"
+        else
+          echo "DATOS_SCRAPEADOS=false" >> $GITHUB_ENV
+          echo "⚠️ No se han scrapeado datos"
+        fi
 
-      - name: Subir resultados al repositorio
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '.'
-          message: "Actualización automática datos vuelos"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Subir resultados al repositorio solo si hay datos
+      if: env.DATOS_SCRAPEADOS == 'true'
+      uses: EndBug/add-and-commit@v9
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        add: 'data/*'
+        message: "Actualización automática datos vuelos"
