@@ -38,8 +38,10 @@ log = logging.getLogger(__name__)
 # -------------------------
 RUTA_BASE = "data"
 
-TRAYECTO_DOMESTICO = ['MAD-BRU', 'BCN-BRU', 'BCN-ZRH', 'BCN-GVA', 'MAD-AMS', 'BCN-AMS', 'MAD-FRA', 'BCN-ROM']
-TRAYECTO_INTERNAC  = ['MAD-BOG', 'MAD-MEX', 'MAD-LIM', 'MAD-MIA', 'BCN-TLV', 'BCN-DXB', 'BCN-DOH']
+#TRAYECTO_DOMESTICO = ['MAD-BRU', 'BCN-BRU', 'BCN-ZRH', 'BCN-GVA', 'MAD-AMS', 'BCN-AMS', 'MAD-FRA', 'BCN-ROM']
+#TRAYECTO_INTERNAC  = ['MAD-BOG', 'MAD-MEX', 'MAD-LIM', 'MAD-MIA', 'BCN-TLV', 'BCN-DXB', 'BCN-DOH']
+TRAYECTO_DOMESTICO = ['MAD-BRU']
+TRAYECTO_INTERNAC  = ['MAD-BOG']
 
 FECHA_IDA_DOM_15DIAS    = "2026-03-25"
 FECHA_VUELTA_DOM_15DIAS = "2026-03-27"
@@ -381,6 +383,7 @@ if __name__ == "__main__":
 
     fin = time.time()
     log.info("Tiempo total: %.1f minutos", (fin - inicio) / 60)
+
 
 
 
