@@ -17,6 +17,9 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium import webdriver
+import shutil
+import sys
 
 # -------------------------
 # LOGGING
@@ -78,18 +81,35 @@ MALETAS = {
 # FUNCIONES AUXILIARES
 # -------------------------
 
+
 def crear_driver():
+    """
+    Crea y devuelve un driver de Selenium Firefox en modo headless.
+    Comprueba que Firefox y Geckodriver estén disponibles.
+    """
+
+    # Comprobar Firefox
+    if shutil.which("firefox") is None:
+        print("❌ Error: Firefox no encontrado en el sistema.")
+        print("Instálalo o asegúrate de que esté en el PATH.")
+        sys.exit(1)
+
+    # Comprobar Geckodriver
+    if shutil.which("geckodriver") is None:
+        print("❌ Error: Geckodriver no encontrado en el sistema.")
+        print("Instálalo o asegúrate de que esté en el PATH (/usr/local/bin/ en Linux).")
+        sys.exit(1)
+
+    # Opciones de Firefox
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--window-size=1920,1080")
 
-    service = Service()
+    # Crear driver
+    service = Service()  # No necesita ruta si geckodriver está en PATH
+    driver = webdriver.Firefox(service=service, options=options)
 
-    driver = webdriver.Firefox(
-        service=service,
-        options=options
-    )
-
+    print("✅ Driver de Firefox iniciado correctamente")
     return driver
 
 def cargar_con_reintentos(driver: webdriver.Firefox, url: str, intentos: int = 2, espera: int = 12) -> bool:
@@ -383,6 +403,7 @@ if __name__ == "__main__":
 
     fin = time.time()
     log.info("Tiempo total: %.1f minutos", (fin - inicio) / 60)
+
 
 
 
